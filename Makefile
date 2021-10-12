@@ -6,7 +6,7 @@
 #    By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/03 16:11:24 by lignigno          #+#    #+#              #
-#    Updated: 2021/10/07 03:50:50 by lignigno         ###   ########.fr        #
+#    Updated: 2021/10/12 03:48:40 by lignigno         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ NAME					:=	so_long
 
 CC						:=	gcc
 OBJ_DIR					:=	obj
-FLAGS					:=	-O2 -Wall -Wextra -Werror
+FLAGS					:=	-Wall -Wextra -Werror
 INCLUDE					:=	srcs/headers
 MLX_DIR					:=	srcs/mlx
 LIBS					:=	$(MLX_DIR)/libmlx.a
@@ -33,10 +33,13 @@ VPATH					:=	srcs \
 							srcs/utils \
 							srcs/rendering \
 							srcs/animation \
-							srcs/animation/pers
+							srcs/parser \
+							srcs/gnl
 
 SRC						:=	main.c \
 							init.c \
+							init_pers.c \
+							init_objects.c \
 							key_press.c \
 							key_release.c \
 							end_game.c \
@@ -44,7 +47,21 @@ SRC						:=	main.c \
 							set_pixel_color.c \
 							get_pixel_color.c \
 							rendering.c \
-							move_management.c
+							move_management.c \
+							check_error.c \
+							parser.c \
+							load_map.c \
+							ft_strlen.c \
+							new_gnl.c \
+							new_gnl_utils.c \
+							find_road.c \
+							img_on_img.c \
+							get_time.c \
+							check_map.c \
+							pave_the_road.c \
+							set_objs_on_map.c \
+							draw_map.c \
+							set_xy_of_map.c
 
 OBJ						:=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
 DEP						:=	$(wildcard $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.d))))
@@ -58,7 +75,7 @@ $(NAME)					:	$(OBJ)
 							@echo "$(COL_0);1m"
 							@echo "\t\tCOMMAND + V"
 							@echo "$(UNSET)"
-							@printf "$(shell pwd)/$@" | pbcopy
+							@printf "$(shell pwd)/$@ map.bar" | pbcopy
 
 $(OBJ_DIR)/%.o			:	%.c
 							$(CC) $(FLAGS) -I $(INCLUDE) -MD -c $< -o $@

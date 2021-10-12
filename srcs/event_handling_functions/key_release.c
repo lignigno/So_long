@@ -6,7 +6,7 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:44:16 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/07 03:29:36 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/09 19:52:51 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 int	key_release(int key, t_all *all)
 {
 	if (key == UP || key == DOWN)
-		all->pers.move_y = 0;
+		all->map.move_y = 0;
 	else if (key == LEFT || key == RIGHT)
-		all->pers.move_x = 0;
+		all->map.move_x = 0;
 
 	return (EXIT_SUCCESS);
 }

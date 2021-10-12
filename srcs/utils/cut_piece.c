@@ -6,11 +6,11 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 19:01:11 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/06 22:53:18 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/09 15:36:56 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "public.h"
+#include "../headers/public.h"
 
 // _________________________________________________________________SUBFUNCTIONS
 
@@ -38,18 +38,16 @@ static void	redraw(	const t_imgdata *from_img,
 
 // ____________________________________________________________________MAIN FUNC
 
-t_imgdata	cut_piece(	void *mlx_ptr,
+void	cut_piece(	void *mlx_ptr,
 						const t_imgdata *from_img,
+						t_imgdata *to_img,
 						const t_cut_param *param)
 {
-	t_imgdata	resimg;
-
-	resimg.height = param->new_height;
-	resimg.ptr = mlx_new_image(mlx_ptr, param->new_width, param->new_height);
-	resimg.addr = mlx_get_data_addr(resimg.ptr,
-									&resimg.bpp,
-									&resimg.width,
-									&resimg.endian);
-	redraw(from_img, &resimg, param);
-	return (resimg);
+	to_img->height = param->new_height;
+	to_img->ptr = mlx_new_image(mlx_ptr, param->new_width, param->new_height);
+	to_img->addr = mlx_get_data_addr(to_img->ptr,
+									&to_img->bpp,
+									&to_img->width,
+									&to_img->endian);
+	redraw(from_img, to_img, param);
 }
