@@ -6,7 +6,7 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:36:30 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/12 08:34:58 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/13 05:13:20 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,20 @@ void	rendering(t_all *all)
 	mlx_put_image_to_window(all->mlx, all->win,
 		all->pers->current_move[all->pers->motion_frame].ptr,
 		(WINDOW_W - 1) * BLOCK_SIZE / 2, (WINDOW_H - 1) * BLOCK_SIZE / 2);
+	{
+		ssize_t	i;
+		ssize_t	j;
+
+		i = -1;
+		while (++i < 1)
+		{
+			j = -1;
+			while (++j < all->enemy.roads[i].num_car)
+			{
+				mlx_put_image_to_window(all->mlx, all->win, all->enemy.roads[i].skin.ptr,
+					all->enemy.start_x + all->enemy.roads[i].x[j],
+					all->enemy.start_y + all->enemy.roads[i].y * BLOCK_SIZE);
+			}
+		}
+	}
 }

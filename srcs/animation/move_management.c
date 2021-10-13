@@ -6,7 +6,7 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:56:40 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/12 08:27:55 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/13 05:19:34 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,14 @@ void	check_collision(t_all *all)
 	collision_wall(all, four_point, nearest_x, nearest_y);
 	collision_collectible(all, nearest_x, nearest_y);
 	collision_exit(all, nearest_x, nearest_y);
+	// collision_enemy(all, nearest_x, nearest_y);
+}
+
+void	generate_new_car(t_all *all, t_car *road)
+{
+	(void)all;
+	road->x[road->num_car] = 0;
+	road->num_car++;
 }
 
 // ____________________________________________________________________MAIN FUNC
@@ -134,7 +142,6 @@ int	move_management(t_all *all)
 	check_collision(all);
 
 	// move_pers
-	// тут нужен таймер;
 	{
 		all->map.x = all->map.next_x;
 		all->map.y = all->map.next_y;
@@ -150,9 +157,44 @@ int	move_management(t_all *all)
 			all->pers->current_move = all->pers->down;
 	}
 
-	// move_mobs
-	// тут нужен таймер;
-	{}
+	// move_enemy
+	{
+		ssize_t	i;
+		ssize_t	j;
+
+		all->enemy.start_y = all->map.y;
+		all->enemy.start_x = all->map.x + (WINDOW_W / 2 - 2) * BLOCK_SIZE;
+		i = -1;
+		// перебрать каждую дорогу
+		while (++i < all->enemy.num_roads)
+		{
+			j = -1;
+			// изменить положение каждой машинки на этой дороге
+			while (++j < all->enemy.roads[i].num_car)
+				all->enemy.roads[i].x[j] += BLOCK_SIZE / STEP_PROPOTION * SPEED_C ;
+
+			// здесь нужно поправить
+			// если она доехала до конца то убрать её
+			if (all->enemy.roads[i].x[all->enemy.roads[i].num_car - 1] > all->map.width * BLOCK_SIZE + all->map.x)
+				all->enemy.roads[i].num_car--;
+
+			// если можно сгенерировать, то генерировать
+			if (get_time() > all->enemy.roads[i].time_new_car
+				&& all->enemy.roads[i].num_car < all->map.width / 2 + 1)
+			{
+				generate_new_car(all, &all->enemy.roads[i]);
+				all->enemy.roads[i].time_new_car = get_time() + \
+					all->my.wait_car * (rand() % (all->map.width / 2 + 1) + 1);
+			}
+		}
+	}
+
+	printf("y %zi\n", all->enemy.roads[0].y);
+	printf("num_car %zi\n", all->enemy.roads[0].num_car);
+	printf("time_new_car %zu %zu\n", all->enemy.roads[0].time_new_car, get_time());
+	for (ssize_t i = 0; i < all->enemy.roads[0].num_car; i++)
+		printf("roads[0].x[%zi] %zi\n", i, all->enemy.roads[0].x[i]);
+	printf("\n");
 
 	rendering(all);
 

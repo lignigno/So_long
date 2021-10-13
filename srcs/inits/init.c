@@ -6,7 +6,7 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 03:26:05 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/12 10:08:34 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/13 04:39:34 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	load_scar(t_all *all, t_imgdata *from_img, t_cut_param *param)
 	cut_piece(all->mlx, from_img, &all->enemy.cars[SCAR], param);
 }
 
-void	init_enemy(t_all *all)
+void	init_cars(t_all *all)
 {
 	t_imgdata	img;
 	t_cut_param	param;
@@ -74,6 +74,6 @@ t_all	*init(void)
 	all->my.wait_car *= (SEC / FPS);
 	init_pers(all);
 	init_objects(all);
-	init_enemy(all);
+	init_cars(all);
 	return (all);
 }

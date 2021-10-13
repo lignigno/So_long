@@ -6,7 +6,7 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 15:26:52 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/12 10:01:39 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/13 04:36:30 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ enum	e_objects_id
 	OPENED_EXIT,
 	NUMBER_OBJECTS,
 	PERS,
-	FINISH = 666,
+	DIE = 666,
+	FINISH = 777,
 };
 
 typedef struct s_cut_param
@@ -95,11 +96,23 @@ typedef struct s_myconst
 	ssize_t	wait_car;
 }				t_myconst;
 
+typedef struct s_car
+{
+	size_t		time_new_car;
+	t_imgdata	skin;
+	ssize_t		height;
+	ssize_t		num_car;
+	ssize_t		*x;
+	ssize_t		y;
+}				t_car;
+
 typedef struct s_enemy
 {
 	t_imgdata	cars[3];
-	size_t		overlap[3];
-	ssize_t		***number_cars[3]; // [car][y][number][x]
+	ssize_t		num_roads;
+	t_car		*roads;
+	ssize_t		start_x;
+	ssize_t		start_y;
 }				t_enemy;
 
 typedef struct s_all
