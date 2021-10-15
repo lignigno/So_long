@@ -6,7 +6,7 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 19:01:11 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/15 08:39:35 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/15 09:44:02 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	cut_piece(	void *mlx_ptr,
 {
 	to_img->height = param->new_height;
 	to_img->ptr = mlx_new_image(mlx_ptr, param->new_width, param->new_height);
+	check_error(!to_img->ptr);
 	to_img->addr = mlx_get_data_addr(to_img->ptr,
 			&to_img->bpp, &to_img->width, &to_img->endian);
 	redraw(from_img, to_img, param);

@@ -6,7 +6,7 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 03:48:59 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/15 08:40:57 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/15 09:45:06 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	draw_map(t_all *all)
 	all->map.back.ptr = mlx_new_image(all->mlx,
 			(all->map.width + WINDOW_W - 2) * BLOCK_SIZE,
 			(all->map.height + WINDOW_H - 2) * BLOCK_SIZE);
+	check_error(!all->map.back.ptr);
 	all->map.back.height = (all->map.height + WINDOW_H - 2) * BLOCK_SIZE;
 	all->map.back.addr = mlx_get_data_addr(all->map.back.ptr,
 			&all->map.back.bpp, &all->map.back.width, &all->map.back.endian);

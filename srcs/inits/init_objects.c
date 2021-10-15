@@ -6,7 +6,7 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 12:41:16 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/15 08:12:42 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/15 09:44:32 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void	init_objects(t_all *all)
 
 	img.ptr = mlx_xpm_file_to_image(all->mlx, "srcs/imgs/tilemap_packed.xpm",
 			&img.width, &img.height);
+	check_error(!img.ptr);
 	img.addr = mlx_get_data_addr(img.ptr, &img.bpp, &img.width, &img.endian);
 	param.cut_by_x = TILE_SIZE;
 	param.cut_by_y = TILE_SIZE;

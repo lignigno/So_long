@@ -6,7 +6,7 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 03:47:10 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/12 08:09:21 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/15 09:43:43 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	init_pers(t_all *all)
 
 	img.ptr = mlx_xpm_file_to_image(all->mlx, "srcs/imgs/tilemap_packed.xpm",
 			&img.width, &img.height);
+	check_error(!img.ptr);
 	img.addr = mlx_get_data_addr(img.ptr, &img.bpp, &img.width, &img.endian);
 	all->pers = malloc(sizeof(t_pers));
 	check_error(!all->pers);

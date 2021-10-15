@@ -6,7 +6,7 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 15:22:24 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/15 08:56:41 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/15 09:14:43 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,8 @@ int	main(int argc, char const *argv[])
 	mlx_hook(all->win, 17, 0, end_game, all);
 	mlx_loop_hook(all->mlx, move_management, all);
 	mlx_loop(all->mlx);
+
+
+	
 	return (0);
 }
