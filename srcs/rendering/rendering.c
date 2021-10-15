@@ -6,12 +6,14 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 22:36:30 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/13 05:13:20 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/15 08:19:18 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/public.h"
 // #include "public.h"
+
+// _________________________________________________________________SUBFUNCTIONS
 
 static void	set_from_to(t_all *all, ssize_t x[3], ssize_t y[3])
 {
@@ -29,9 +31,12 @@ static void	set_from_to(t_all *all, ssize_t x[3], ssize_t y[3])
 		y[1] = all->map.height - 2;
 }
 
+//                                                                             |
+// ----------------------------------------------------------------------------|
+//                                                                             |
+
 void	show_collectible(t_all *all, ssize_t x[3], ssize_t y[3])
 {
-
 	y[2] = y[0];
 	while (++y[2] < y[1] + 2)
 	{
@@ -47,9 +52,12 @@ void	show_collectible(t_all *all, ssize_t x[3], ssize_t y[3])
 	}
 }
 
+//                                                                             |
+// ----------------------------------------------------------------------------|
+//                                                                             |
+
 void	show_opened_exit(t_all *all, ssize_t x[3], ssize_t y[3])
 {
-
 	y[2] = y[0];
 	while (++y[2] < y[1] + 2)
 	{
@@ -64,6 +72,10 @@ void	show_opened_exit(t_all *all, ssize_t x[3], ssize_t y[3])
 		}
 	}
 }
+
+//                                                                             |
+// ----------------------------------------------------------------------------|
+//                                                                             |
 
 void	show_finish(t_all *all)
 {
@@ -95,20 +107,5 @@ void	rendering(t_all *all)
 	mlx_put_image_to_window(all->mlx, all->win,
 		all->pers->current_move[all->pers->motion_frame].ptr,
 		(WINDOW_W - 1) * BLOCK_SIZE / 2, (WINDOW_H - 1) * BLOCK_SIZE / 2);
-	{
-		ssize_t	i;
-		ssize_t	j;
-
-		i = -1;
-		while (++i < 1)
-		{
-			j = -1;
-			while (++j < all->enemy.roads[i].num_car)
-			{
-				mlx_put_image_to_window(all->mlx, all->win, all->enemy.roads[i].skin.ptr,
-					all->enemy.start_x + all->enemy.roads[i].x[j],
-					all->enemy.start_y + all->enemy.roads[i].y * BLOCK_SIZE);
-			}
-		}
-	}
+	mlx_string_put(all->mlx, all->win, 10, 15, 0, all->str_steps);
 }

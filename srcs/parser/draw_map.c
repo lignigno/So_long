@@ -6,11 +6,24 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/12 03:48:59 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/12 07:57:59 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/15 08:40:57 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+void	if_else(t_all *all, ssize_t *x, ssize_t *y)
+{
+	if (*x < 0 || *y < 0 || *x >= all->map.width || *y >= all->map.height)
+		check_error(!img_on_img(&all->map.back, &all->objs[WATER],
+				(*x + WINDOW_W / 2 - 1) * BLOCK_SIZE,
+				(*y + WINDOW_H / 2 - 1) * BLOCK_SIZE));
+	else
+		check_error(!img_on_img(&all->map.back,
+				&all->map.arr[*x][*y].texture,
+				(*x + WINDOW_W / 2 - 1) * BLOCK_SIZE,
+				(*y + WINDOW_H / 2 - 1) * BLOCK_SIZE));
+}
 
 // ____________________________________________________________________MAIN FUNC
 
@@ -30,15 +43,6 @@ void	draw_map(t_all *all)
 	{
 		x = -1 - (WINDOW_W / 2 - 1);
 		while (++x < all->map.width + (WINDOW_W / 2 - 1))
-		{
-			if (x < 0 || y < 0 || x >= all->map.width || y >= all->map.height)
-				check_error(!img_on_img(&all->map.back, &all->objs[WATER],
-					(x + WINDOW_W / 2 - 1) * BLOCK_SIZE,
-					(y + WINDOW_H / 2 - 1) * BLOCK_SIZE));
-			else
-				check_error(!img_on_img(&all->map.back, &all->map.arr[x][y].texture,
-					(x + WINDOW_W / 2 - 1) * BLOCK_SIZE,
-					(y + WINDOW_H / 2 - 1) * BLOCK_SIZE));
-		}
+			if_else(all, &x, &y);
 	}
 }

@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_release.c                                      :+:      :+:    :+:   */
+/*   animation.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/06 22:44:16 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/15 07:26:33 by lignigno         ###   ########.fr       */
+/*   Created: 2021/10/15 07:19:00 by lignigno          #+#    #+#             */
+/*   Updated: 2021/10/15 08:11:53 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/public.h"
-// #include "public.h"
+#ifndef ANIMATION_H
+# define ANIMATION_H
 
-// ____________________________________________________________________MAIN FUNC
+# include "public.h"
 
-int	key_release(int key, t_all *all)
-{
-	if (key == UP || key == DOWN)
-		all->map.move_y = 0;
-	else if (key == LEFT || key == RIGHT)
-		all->map.move_x = 0;
-	return (EXIT_SUCCESS);
-}
+void	check_collision(t_all *all);
+
+#endif

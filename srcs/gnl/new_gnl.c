@@ -6,109 +6,81 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 08:12:22 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/09 08:15:13 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/15 08:05:12 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*ft_strdup(const char *s1)
+static int	check_errors(int fd, char **line, int size, int is_start)
 {
-	char	*new;
-	ssize_t	i;
-
-	new = ft_strnew(ft_strlen(s1));
-	if (new == NULL)
-		return (NULL);
-	i = -1;
-	while (s1[++i])
-		new[i] = s1[i];
-	return (new);
+	if (BUFFER_SIZE <= 0)
+		return (0);
+	if (is_start)
+		*line = malloc(sizeof(char));
+	if (!(*line))
+		return (0);
+	if (size < 0 || fd < 0 || fd > FD_MAX)
+	{
+		free(*line);
+		*line = 0;
+		return (0);
+	}
+	if (is_start)
+		(*line)[0] = '\0';
+	return (1);
 }
 
-char	*ft_strchr(const char *s, int c)
+static int	maj_buffer(char *buf, int i)
 {
-	int i;
-
-	i = 0;
-	while (s[i] != (char)c)
-		if (!s[i++])
-			return (NULL);
-	return ((char *)&s[i]);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*ptr;
-	int		i;
 	int		j;
 
-	i = 0;
 	j = 0;
-	if (s1 == NULL || s2 == NULL || !(ptr = (char *)malloc(ft_strlen(s1)
-		+ ft_strlen(s2) + 1)))
-		return (NULL);
-	while (s1[i] != '\0')
+	while (j < BUFFER_SIZE - i)
 	{
-		ptr[i] = s1[i];
-		i++;
-	}
-	while (s2[j] != '\0')
-	{
-		ptr[i] = s2[j];
-		i++;
+		buf[j] = buf[i + 1 + j];
 		j++;
 	}
-	ptr[i] = '\0';
-	return (ptr);
+	i = j;
+	while (j <= BUFFER_SIZE)
+	{
+		buf[j] = '\0';
+		j++;
+	}
+	return (i);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+static int	index_pos(int size)
 {
-	size_t	i;
-	char	*ptr;
-
-	i = 0;
-	if (!s || (long int)len < 0)
-		return (NULL);
-	ptr = (char *)malloc(len + 1);
-	if (ptr == NULL)
-		return (NULL);
-	while (start < ft_strlen(s) && i < len)
-	{
-		ptr[i] = s[start];
-		i++;
-		start++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
+	if (size < 0)
+		return (0);
+	return (size);
 }
 
-int		gnl(int fd, char **line)
+int	gnl(int fd, char **line)
 {
-	ssize_t		r;
-	char		bf[BUFFER_SIZE + (r = 1)];
-	static char	*lr[FD_SIZE];
-	char		*tmp;
+	static t_buffer	buff[FD_MAX];
+	int				i;
 
-	if (fd < 0 || !line || BUFFER_SIZE <= 0)
+	if (!line || !check_errors(fd, line, 1, 1))
 		return (-1);
-	lr[fd] == NULL ? lr[fd] = ft_strnew(0) : NULL;
-	while (!ft_strchr(lr[fd], '\n') && (r = read(fd, bf, BUFFER_SIZE)) > 0)
+	if (buff[fd].size <= 0)
 	{
-		bf[r] = '\0';
-		tmp = ft_strjoin(lr[fd], bf);
-		ft_memdel((void **)&lr[fd]);
-		lr[fd] = tmp;
+		buff[fd].size = read(fd, buff[fd].content, BUFFER_SIZE);
+		buff[fd].content[index_pos(buff[fd].size)] = '\0';
 	}
-	if (r == 0)
-		*line = ft_strdup(lr[fd]);
-	else if (r > 0)
-		*line = ft_substr(lr[fd], 0, (ft_strchr(lr[fd], '\n') - lr[fd]));
-	else
-		return (-1);
-	tmp = ft_strdup(lr[fd] + (ft_strlen(*line) + ((r > 0) ? +1 : +0)));
-	ft_memdel((void **)&lr[fd]);
-	lr[fd] = tmp;
-	return (r == 0 ? 0 * ft_memdel((void **)&lr[fd]) : 1);
+	while (buff[fd].size > 0)
+	{
+		i = find_char_index(buff[fd].content, '\n');
+		if (i >= 0)
+		{
+			*line = join_and_realloc(*line, buff[fd].content, i);
+			buff[fd].size = maj_buffer(buff[fd].content, i);
+			return (check_errors(fd, line, 1, 0));
+		}
+		*line = join_and_realloc(*line, buff[fd].content, BUFFER_SIZE + 1);
+		buff[fd].size = read(fd, buff[fd].content, BUFFER_SIZE);
+		buff[fd].content[index_pos(buff[fd].size)] = '\0';
+	}
+	return (check_errors(fd, line, buff[fd].size, 0) - 1);
 }

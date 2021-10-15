@@ -6,7 +6,7 @@
 #    By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/03 16:11:24 by lignigno          #+#    #+#              #
-#    Updated: 2021/10/12 03:48:40 by lignigno         ###   ########.fr        #
+#    Updated: 2021/10/15 08:58:01 by lignigno         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,9 @@ VPATH					:=	srcs \
 							srcs/rendering \
 							srcs/animation \
 							srcs/parser \
-							srcs/gnl
+							srcs/gnl \
+							srcs/animation
+
 
 SRC						:=	main.c \
 							init.c \
@@ -52,8 +54,6 @@ SRC						:=	main.c \
 							parser.c \
 							load_map.c \
 							ft_strlen.c \
-							new_gnl.c \
-							new_gnl_utils.c \
 							find_road.c \
 							img_on_img.c \
 							get_time.c \
@@ -61,7 +61,11 @@ SRC						:=	main.c \
 							pave_the_road.c \
 							set_objs_on_map.c \
 							draw_map.c \
-							set_xy_of_map.c
+							set_xy_of_map.c \
+							check_collision.c \
+							new_gnl.c \
+							new_gnl_utils.c
+
 
 OBJ						:=	$(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
 DEP						:=	$(wildcard $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.d))))
@@ -75,7 +79,7 @@ $(NAME)					:	$(OBJ)
 							@echo "$(COL_0);1m"
 							@echo "\t\tCOMMAND + V"
 							@echo "$(UNSET)"
-							@printf "$(shell pwd)/$@ map.bar" | pbcopy
+							@printf "$(shell pwd)/$@ map.ber" | pbcopy
 
 $(OBJ_DIR)/%.o			:	%.c
 							$(CC) $(FLAGS) -I $(INCLUDE) -MD -c $< -o $@
@@ -90,6 +94,7 @@ include $(DEP)
 # ________________________________________________________________CLEANS TARGETS
 
 clean					:
+							@make clean -C $(MLX_DIR)
 							@rm -rf $(OBJ_DIR)
 							@echo "$(COL_1);3;1mobject\033[23;22m files for \033[3;1m$(NAME)\033[23;22m have been deleted\033[0m"
 

@@ -6,65 +6,76 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 08:13:33 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/09 08:15:50 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/15 08:03:39 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-size_t		ft_strlen1(const char *str)
+static int	ft_strlen(const char *s)
 {
-	const	char	*ptr;
-	size_t			count;
+	size_t	i;
 
-	count = 0;
-	ptr = str;
-	while (*ptr)
-	{
-		++ptr;
-		++count;
-	}
-	return (count);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }
 
-char		*ft_strnew(size_t size)
+static char	*ft_realloc(char *str, int len)
 {
-	return (ft_memalloc((size + 1) * sizeof(char)));
-}
+	char	*new;
+	int		i;
 
-void		*ft_memalloc(size_t size)
-{
-	void	*ptr;
-
-	ptr = malloc(size);
-	if (ptr == NULL)
+	if (len < ft_strlen(str))
 		return (NULL);
-	ft_memset(ptr, 0, size);
-	return (ptr);
+	new = malloc(len * sizeof(char));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (str[i] && i < len)
+	{
+		new[i] = str[i];
+		i++;
+	}
+	new[i] = '\0';
+	free(str);
+	return (new);
 }
 
-void		*ft_memset(void *b, int c, size_t len)
+char	*join_and_realloc(char *s, char *buf, int size)
 {
-	unsigned	char	*ub;
+	int		i;
+	int		j;
+	int		n;
 
-	ub = (unsigned char *)b;
-	while (len > 0)
+	n = ft_strlen(s);
+	j = n + size + 1;
+	s = ft_realloc(s, j);
+	if (!s)
+		return (NULL);
+	i = 0;
+	j = n;
+	while (i < size)
 	{
-		*ub = c;
-		len--;
-		ub++;
+		s[j] = buf[i];
+		i++;
+		j++;
 	}
-	return (b);
+	s[j] = '\0';
+	return (s);
 }
 
-int			ft_memdel(void **ptr)
+int	find_char_index(char *str, char c)
 {
-	if (*ptr)
+	int		i;
+
+	i = 0;
+	while (str[i])
 	{
-		ft_memset(*ptr, 0, ft_strlen(*ptr));
-		free(*ptr);
-		*ptr = NULL;
-		return (1);
+		if (str[i] == c)
+			return (i);
+		i++;
 	}
-	return (0);
+	return (-1);
 }

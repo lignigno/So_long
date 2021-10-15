@@ -6,14 +6,14 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 12:41:16 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/12 08:52:43 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/15 08:12:42 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/inits.h"
-// #include "inits.h"
+#include "inits.h"
 
-// __________________________________________________________________SUBFUNCTIONS
+// _________________________________________________________________SUBFUNCTIONS
+
 static void	set_start_xy_1(t_cut_param *param, int who)
 {
 	if (who == GROUND)

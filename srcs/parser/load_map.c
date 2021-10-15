@@ -6,7 +6,7 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 07:01:14 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/09 15:59:35 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/15 08:07:44 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	find_out_size_map(t_map *map, const char *file)
 		if (line)
 			len = ft_strlen(line);
 		check_error(readed < 0 || (len != map->width && map->width));
+		free(line);
 		map->width = len;
 		map->height++;
 	}
@@ -83,6 +84,7 @@ void	set_ids_on_map(t_all *all, const char *file)
 		readed = gnl(fd, &line);
 		check_error(readed < 0);
 		translate_in_ids(all, line, y);
+		free(line);
 		y++;
 	}
 	close(fd);

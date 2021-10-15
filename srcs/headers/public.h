@@ -6,7 +6,7 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 20:17:05 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/13 04:59:07 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/15 08:27:26 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "structs.h"
 
 # define SEC 1000000
-# define FPS 17
+# define FPS 15
 
 # define WINDOW_W 16
 # define WINDOW_H 9
@@ -56,15 +56,6 @@
 # define CLOSED_EXIT_Y 10
 # define OPENED_EXIT_X 12
 # define OPENED_EXIT_Y 11
-# define TAXI	0
-# define TAXI_X	18
-# define TAXI_Y	14
-# define CAR	1
-# define CAR_X	18
-# define CAR_Y	16
-# define SCAR	2
-# define SCAR_X	21
-# define SCAR_Y	17
 
 # define PERS_SET 2
 
@@ -72,12 +63,6 @@
 //     undefined behavior;
 # define STEP_PROPOTION 16
 # define SPEED_P 4
-# define SPEED_C 6
-
-// BLOCK_SIZE * 2 / (BLOCK_SIZE / STEP_PROPOTION * SPEED_C)
-// VAR = BLOCK_SIZE * 2 / (BLOCK_SIZE / STEP_PROPOTION * SPEED_C) +
-// !!(BLOCK_SIZE * 2 % (BLOCK_SIZE / STEP_PROPOTION * SPEED_C))
-// VAR * (SEC / FPS) time_wait_for_car
 
 # define TXTC_BLUE "\e[1;38;2;0;183;224m"
 # define TXTC_RED "\e[1;38;2;181;0;0m"
@@ -95,7 +80,8 @@ void		rendering(t_all *all);
 void		check_error(unsigned int error_condition);
 int			gnl(int fd, char **line);
 int			finde_road(t_map *map, size_t y);
-t_imgdata	*img_on_img(t_imgdata *base, t_imgdata *top, ssize_t sx, ssize_t sy);
+t_imgdata	*img_on_img(t_imgdata *base,
+				t_imgdata *top, ssize_t sx, ssize_t sy);
 void		set_pixel_color(const t_imgdata *img, t_uint x, t_uint y,
 				t_uint color);
 t_uint		get_pixel_color(const t_imgdata *img, t_uint x, t_uint y);

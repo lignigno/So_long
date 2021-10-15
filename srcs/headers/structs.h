@@ -6,12 +6,14 @@
 /*   By: lignigno <lignign@student.21-school.ru>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 15:26:52 by lignigno          #+#    #+#             */
-/*   Updated: 2021/10/13 04:36:30 by lignigno         ###   ########.fr       */
+/*   Updated: 2021/10/15 05:54:53 by lignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+# define LEN_STR_STEPS 29
 
 typedef unsigned int	t_uint;
 
@@ -93,34 +95,15 @@ typedef struct s_myconst
 {
 	ssize_t	map_x;
 	ssize_t	map_y;
-	ssize_t	wait_car;
 }				t_myconst;
-
-typedef struct s_car
-{
-	size_t		time_new_car;
-	t_imgdata	skin;
-	ssize_t		height;
-	ssize_t		num_car;
-	ssize_t		*x;
-	ssize_t		y;
-}				t_car;
-
-typedef struct s_enemy
-{
-	t_imgdata	cars[3];
-	ssize_t		num_roads;
-	t_car		*roads;
-	ssize_t		start_x;
-	ssize_t		start_y;
-}				t_enemy;
 
 typedef struct s_all
 {
 	void		*win;
 	void		*mlx;
+	size_t		num_steps;
+	char		str_steps[LEN_STR_STEPS];
 	t_fpsc		timer;
-	t_enemy		enemy;
 	t_uint		num_items;
 	t_myconst	my;
 	t_pers		*pers;
